@@ -1,29 +1,40 @@
-## Pipeline backend with Rest API
+# Pipeline backend with Rest API
 
-<p>=============================================</p>
-<p>This repo is based on the pipeline_base repo from ArtFx</p>
-<a href="https://gitlab.com/artfx-pipeline/pipline_base/-/tree/prod">Go to pipeline_base repo</a>
-<p>=============================================</p>
-<h4>Dependences</h4>
-<p>Flask | Flask-RESTful</p>
-<p>jsonify</p>
+===========================================<br/>
+This repo is based on the pipeline_base repo from ArtFx :school:<br/>
+https://gitlab.com/artfx-pipeline/pipline_base/-/tree/prod<br/>
+===========================================<br/>
+### Dependences
+Flask | Flask-RESTful<br/>
+jsonify<br/>
 
-#### Responce from the lib :
+### Responce from the lib :
 ```json
 {
   "data": "responce with type needed",
-  "message": "Error or success"
+  "message": "Error or success return"
 }
 ```
-#### List all questions
-* `Definition` => `** Response **`
-<br/><br/>
+### List all questions
+* `Definition` => `Response`
+
+#### Project
 * `Get /projects` => 
 ```json
 [ "project1", "project2", "project3" ]
 ```
 
-##### Asset
+#### Sid (Shot and Asset)
+
+##### GET
+`shot` => `project/s/seq/shot/task/subtask/state/version/ext`<br/>
+`asset` => `project/a/cat/name/task/subtask/state/version/ext`
+
+Fill the rest request with what you want<br/>
+*Exemples :* <br/>
+`demo/s/s010/p010/comp/` => return the next comp folder (subtask)<br/>
+`demo/s/*/*/*/*/*/*/*/*/` => return all the shot from demo project
+###### Asset
 * `Get /project_name/assets` =>
 ```json
 [ 
@@ -34,22 +45,18 @@
     "task": "asset_task",
     "subtask": "asset_subtask",
     "state": "asset_state",
-    "version": "asset_version"
+    "version": "asset_version",
+    "ext": "file_scene_extension",
+    "date": "file creation date",
+    "tag": "tag",
+    "comment": "comment"
   },
   {
     "Same for all assets": ""
   }
 ]
 ```
-* `Get /project_name/assets/cat/name/task/subtask/state/version` =>
-```json
-{
- "tag": "tag",
- "comment": "comment"
-}
-```
-
-##### Shot
+###### Shot
 * `Get /project_name/shots` =>
 ```json
 [ 
@@ -60,19 +67,53 @@
     "task": "shot_task",
     "subtask": "shot_subtask",
     "state": "shot_state",
-    "version": "shot_version"
+    "version": "shot_version",
+    "ext": "file_scene_extension",
+    "date": "file creation date",
+    "tag": "tag",
+    "comment": "comment"
   },
   {
     "Same for all shots": ""
   }
 ]
 ```
-* `Get /project_name/shots/seq/shot/task/subtask/state/version` =>
+
+
+##### POST
+
+For create shoot or asset you need :<br/>
+**Arguments :** <br/>
+###### Shot
+- `"project":string` Name of the project
+- `"type":string` Type (a for asset, s for shot)
+- `"seq":string` Name of the sequence
+- `"shot":string` Name of the shot
+- `"task":string` Name of the task
+- `"subtask":string` Name of the subtask
+- `"state":string` State (w=work, p=publish)
+- `"version":string` Version (ex: v001)
+- `"ext":string` File extension (without ".")
+- `"tag":string` Tag can be null
+- `"comment":string` Comment can be null
+
+###### Asset
+- `"project":string` Name of the project
+- `"type":string` Type (a for asset, s for shot)
+- `"cat":string` Name of the category
+- `"name":string` Asset name
+- `"task":string` Name of the task
+- `"subtask":string` Name of the subtask
+- `"state":string` State (w=work, p=publish)
+- `"version":string` Version (ex: v001)
+- `"ext":string` File extension (without ".")
+- `"tag":string` Tag can be null
+- `"comment":string` Comment can be null
+
+**Responce :** <br/>
 ```json
 {
- "tag": "tag",
- "comment": "comment"
+  "data": "true if created, false if not",
+  "message": "Message"
 }
 ```
-
-
