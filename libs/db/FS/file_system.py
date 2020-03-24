@@ -1,11 +1,8 @@
 import os
-import sys
-import stat
 import shutil
 import math  # For convert size
 import time
 import json
-import subprocess
 from datetime import datetime  # For format date
 from pathlib2 import Path
 # Pipeline
@@ -14,6 +11,7 @@ from libs.utils import pipe_exception as pe
 from libs.utils import log
 from spil.libs.fs.fs import FS
 from spil.conf import fs_conf
+
 
 class FileSystem(object):
     """

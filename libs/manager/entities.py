@@ -8,7 +8,7 @@ import conf
 class Entities(object):
     """"
     Class Entities manage all the shot/asset entities
-    This is the ui => backend front
+    This is backend interface
     """
 
     def __init__(self):
@@ -97,8 +97,30 @@ class Entities(object):
         """
         return conf.projects
 
+    def set_projects(self, name_short, name, disc_path):
+        """
+        Create a new project
+        :param name_short: short name it whill display in the short search bar
+        :param name: complate name on the disk
+        :param disc_path: emplacement on disc where the files will be store
+        :return: success or not
+        """
+        if name not in conf.projects:
+            pass  # TODO add the project in the conf
+        else:
+            return "Project already exist"
+        return self.datas.create_path(disc_path)
+
+    def get_files(self, sid):
+        """
+        Get the list of files in a specific sid
+        :param sid: Sid of research
+        :return: List of folder name
+        """
+        return self.datas.get(sid)
 
 if __name__ == '__main__':
+
     entities = Entities()
     shotSid = Sid(
         path=r"I:\SynologyDrive\ARAL\03_WORK_PIPE\02_SHOT\3d\scenes\s010\p010\fx\pyro\work_v010\s010_p010.ma")

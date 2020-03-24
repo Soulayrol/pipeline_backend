@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 import markdown
 import os
 from libs.manager.entities import Entities
@@ -24,9 +24,19 @@ def index():
 
 
 class ProjectList(Resource):
-
+    """Project manage route"""
     def get(self):
         projects = entities.get_projects()
         return {'data': projects, 'message': 'Success'}
+
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('name_short', required=True)
+        parser.add_argument('name', required=True)
+        parser.add_argument('disc_path', required=True)
+        args = parser.parse_args()
+        entities.set_projects(args['name_short'], args['name'], args['disc_path'])
+        return {'message': 'Project registered', 'data': args}, 201
+
 
 api.add_resource(ProjectList, '/projects')

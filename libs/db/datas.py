@@ -25,6 +25,10 @@ class Datas(object):
         """
         return self.file_system.get(sid)
 
+    def create_path(self, path):
+        """Create a file system path"""
+        return self.file_system.create_path(path)
+
     def get_next_version(self, sid):
         """
         Get the sid of the new version
