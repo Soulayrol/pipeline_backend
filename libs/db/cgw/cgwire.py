@@ -3,13 +3,13 @@ import json
 import gazu
 
 from spil.libs.sid import Sid
-from pipeline.libs.utils.singleton import Singleton
+from libs.utils.singleton import Singleton
 from spil.libs.fs.fs import FS
 from spil.conf import fs_conf
 
 # TODO : mapping confs or change in cgwire to match pipeline: projects, entity types
 
-from pipeline import conf
+import conf
 
 project_mapping = {  # TODO put into project_conf
     'project': {            # 3 words : initials, otherwise 6 first letters, lowercased

@@ -1,7 +1,7 @@
 from libs.engine import engine
 from libs.db.datas import Datas
 from libs.utils import pipe_exception as pe
-from libs.spil.libs.sid.sid import Sid
+from spil.libs.sid.sid import Sid
 import conf
 
 

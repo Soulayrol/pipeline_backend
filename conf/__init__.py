@@ -1,5 +1,5 @@
-from pipeline.conf.global_conf import *
-from pipeline.conf.global_pass import *
+from conf.global_conf import *
+from conf.global_pass import *
 
 # user config
 from configio import ConfigIO

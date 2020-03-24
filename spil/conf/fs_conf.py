@@ -16,7 +16,7 @@ from collections import OrderedDict
 ###########################################################################################
 import six
 from spil.libs.util.utils import is_fs_case_sensitive
-from pipeline import conf
+import conf
 
 """
 SID TEMPLATES AS MEMO

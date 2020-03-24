@@ -13,7 +13,7 @@ import six
 
 from spil.conf.project_conf import projects
 from collections import OrderedDict
-from pipeline import conf
+import conf
 
 ###########################################################################################
 # SID BASE CONFIG / PARTS CONFIG

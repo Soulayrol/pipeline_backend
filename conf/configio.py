@@ -5,8 +5,8 @@ Writer and Reader for User config
 """
 
 import json
-from pipeline.libs.utils.log import debug, info, error
-from pipeline.libs.utils.singleton import Singleton
+from libs.utils.log import debug, info, error
+from libs.utils.singleton import Singleton
 from pathlib2 import Path
 
 

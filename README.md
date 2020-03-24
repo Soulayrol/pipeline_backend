@@ -5,8 +5,16 @@ This repo is based on the pipeline_base repo from ArtFx :school:<br/>
 https://gitlab.com/artfx-pipeline/pipline_base/-/tree/prod<br/>
 ===========================================<br/>
 ### Dependences
-Flask | Flask-RESTful<br/>
-jsonify<br/>
+Build with Docker<br/>
+
+`flask`==`1.1.1`<br/>
+`flask_restful`==`0.3.8`<br/>
+`markdown`==`3.1.1`<br/>
+`jsonify`==`0.5`<br/>
+`logzero`==`1.5.0`<br/>
+`lucidity`==`1.5.1`<br/>
+`pathlib2`==`2.3.5`<br/>
+`gazu`==`0.7.8`<br/>
 
 ### Responce from the lib :
 ```json

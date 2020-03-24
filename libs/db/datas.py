@@ -1,9 +1,9 @@
-from pipeline.libs.db.FS.file_system import FileSystem
-from pipeline.libs.db.cgw.cgwire import CgWire
+from libs.db.FS.file_system import FileSystem
+from libs.db.cgw.cgwire import CgWire
 from spil.libs.sid.sid import Sid
-from pipeline.libs.utils import pipe_exception as pe
-from pipeline.libs.utils import log
-from pipeline import conf
+from libs.utils import pipe_exception as pe
+from libs.utils import log
+import conf
 
 
 class Datas(object):

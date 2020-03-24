@@ -19,7 +19,7 @@ import six
 import glob
 from spil.conf.fs_conf import search_path_mapping, path_mapping
 from spil.libs.util.exception import SpilException
-from pipeline import conf
+import conf
 
 from spil.libs.util.log import debug, warn, info
 

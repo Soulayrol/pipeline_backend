@@ -9,9 +9,9 @@ import subprocess
 from datetime import datetime  # For format date
 from pathlib2 import Path
 # Pipeline
-from pipeline import conf
-from pipeline.libs.utils import pipe_exception as pe
-from pipeline.libs.utils import log
+import conf
+from libs.utils import pipe_exception as pe
+from libs.utils import log
 from spil.libs.fs.fs import FS
 from spil.conf import fs_conf
 
