@@ -38,6 +38,7 @@ from spil.conf.sid_conf import values_defaults, optional_keys, force_keys
 from spil.conf.sid_conf import sip, get_sidtype
 
 from spil.libs.util import log
+
 log.setLevel(log.INFO)
 
 @functools.total_ordering
@@ -523,6 +524,10 @@ class Sid(BaseSid):
             # self.data = data_tmp
             self.init_data(data_tmp)
 
+        # Conform Project
+        for key, value in path_mapping['project'].items():
+            if key == self.data['project']:
+                self.data['project'] = value
         # print 'Init done:', self
 
 if __name__ == '__main__':

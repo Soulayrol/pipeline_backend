@@ -35,8 +35,8 @@ Build with Docker<br/>
 #### Sid (Shot and Asset)
 
 ##### GET
-`shot` => `project/s/seq/shot/task/subtask/state/version/ext`<br/>
-`asset` => `project/a/cat/name/task/subtask/state/version/ext`
+`shot` => `file/project/s/seq/shot/task/subtask/state/version/ext`<br/>
+`asset` => `file/project/a/cat/name/task/subtask/state/version/ext`
 
 Fill the rest request with what you want<br/>
 *Exemples :* <br/>

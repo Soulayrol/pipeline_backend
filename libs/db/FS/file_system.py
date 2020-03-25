@@ -325,6 +325,19 @@ class FileSystem(object):
                 tag = os.path.splitext(f)[0]
         return tag
 
+    def get_comment(self, sid):
+        """
+        Get the tag inside the folder (sid)
+        :return The tag for the sid pass in parameter
+        """
+        comment = ''
+        comment_file = os.path.join(sid.get_as("state").path, 'comment.txt')
+        if os.path.exists(comment_file):
+            file = open(comment_file, 'r')
+            comment = file.read()
+        return comment
+
+
     def get_date(self, sid):
         """
         Get the date inside the folder (sid)

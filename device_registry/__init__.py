@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 import markdown
 import os
 from libs.manager.entities import Entities
+from spil.libs.sid.sid import Sid
 
 # Create flask
 app = Flask(__name__)
@@ -40,3 +41,104 @@ class ProjectList(Resource):
 
 
 api.add_resource(ProjectList, '/projects')
+
+"""
+===============================
+   Gestion des Asset / Shot
+===============================
+"""
+
+def get_paths(sid_base):
+    paths = []
+    for sid in entities.get_files(sid_base):
+        if sid.has_a("state"):
+            info = entities.get_files_info(sid)
+            paths.append({"id": str(sid), "path": sid.path, "date": info["date"], "ext": info["ext"],
+                          "size": info["size"], "tag": info["tag"], "comment": info["comment"]})
+        else:
+            paths.append({"id": str(sid), "path": sid.path})
+
+    return {"data": paths, "message": "Success "}
+
+
+class FilesFramesList(Resource):
+    def get(self, project, type, param1, param2, task, subtask, version, state, frames, ext):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, state, frames, ext])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesExtList(Resource):
+    def get(self, project, type, param1, param2, task, subtask, version, state, ext):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, state, ext])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesStateList(Resource):
+    def get(self, project, type, param1, param2, task, subtask, version, state):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, state, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesVersionList(Resource):
+    def get(self, project, type, param1, param2, task, subtask, version):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesSubtaskList(Resource):
+    def get(self, project, type, param1, param2, task, subtask):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, "*", "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesTaskList(Resource):
+    def get(self, project, type, param1, param2, task):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesParam2List(Resource):
+    def get(self, project, type, param1, param2):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, param2, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesParam1List(Resource):
+    def get(self, project, type, param1):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, param1, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+class FilesTypeList(Resource):
+    def get(self, project, type):
+        try:
+            return get_paths(Sid(sid='/'.join([project, type, "*"])))
+        except Exception as ex:
+            return {"data": [], "message": "Erreur : " + ex.message}
+
+
+api.add_resource(FilesFramesList, '/file/<project>/<type>/<param1>/<param2>/<task>/<subtask>/<version>/<state>/<ext>/<frames>')
+api.add_resource(FilesExtList, '/file/<project>/<type>/<param1>/<param2>/<task>/<subtask>/<version>/<state>/<ext>')
+api.add_resource(FilesStateList, '/file/<project>/<type>/<param1>/<param2>/<task>/<subtask>/<version>/<state>')
+api.add_resource(FilesVersionList, '/file/<project>/<type>/<param1>/<param2>/<task>/<subtask>/<version>')
+api.add_resource(FilesSubtaskList, '/file/<project>/<type>/<param1>/<param2>/<task>/<subtask>')
+api.add_resource(FilesTaskList, '/file/<project>/<type>/<param1>/<param2>/<task>')
+api.add_resource(FilesParam2List, '/file/<project>/<type>/<param1>/<param2>')
+api.add_resource(FilesParam1List, '/file/<project>/<type>/<param1>')
+api.add_resource(FilesTypeList, '/file/<project>/<type>')

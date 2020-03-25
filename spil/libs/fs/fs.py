@@ -93,17 +93,12 @@ class FS(object):
             new_pattern = pattern.split('.')[0] + '.' + ext
             found.extend(glob.glob(os.path.join(project_path, new_pattern)))
         """
-
         found = glob.glob(os.path.join(project_path, pattern))
         result = []
         for path in found:
             path = str(path).replace(os.sep, '/')
             try:
                 sid = Sid(path=path)
-
-                for key, value in path_mapping['project'].items():
-                    if key == sid.get('project'):
-                        sid.project = value
             except SpilException as e:
                 debug('Path did not generate sid : {}'.format(path))
                 continue

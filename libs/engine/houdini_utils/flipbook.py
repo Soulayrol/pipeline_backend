@@ -1,7 +1,8 @@
 import hou
 import toolutils
-from pipeline.libs import engine
+from libs import engine
 import os
+
 
 def launch():
     # we open the scene

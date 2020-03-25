@@ -119,6 +119,15 @@ class Entities(object):
         """
         return self.datas.get(sid)
 
+    def get_files_info(self, sid):
+        """
+        Get date / tag / comment from a sid
+        :param sid: sid to get info
+        :return: date / tag / comment
+        """
+        return self.datas.get_file_info(sid)
+
+
 if __name__ == '__main__':
 
     entities = Entities()
@@ -126,5 +135,5 @@ if __name__ == '__main__':
         path=r"I:\SynologyDrive\ARAL\03_WORK_PIPE\02_SHOT\3d\scenes\s010\p010\fx\pyro\work_v010\s010_p010.ma")
     assetSid = Sid(
         path=r"I:\SynologyDrive\ARAL\03_WORK_PIPE\01_ASSET_3D\01_characters\dieu\3d\scenes\02_modelinglowres\maya\work_v004\dieu.ma")
-
+    print str(shotSid)
     entities.make_new_version(shotSid, '', '')
