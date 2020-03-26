@@ -55,10 +55,15 @@ class Datas(object):
         """
         Create entity
         """
-        if sid.is_asset():
-            return self.file_system.create_asset(sid, tag, comment)
-        else:
-            return self.file_system.create_shot(sid, tag, comment)
+        try:
+            if sid.is_asset():
+                sid = self.file_system.create_asset(sid, tag, comment)
+                return sid
+            else:
+                sid = self.file_system.create_shot(sid, tag, comment)
+                return sid
+        except Exception as ex:
+            raise ex
 
     def conform_entity(self, sid):  # TODO pass a entity object
         """

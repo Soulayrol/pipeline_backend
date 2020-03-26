@@ -25,7 +25,11 @@ class Entities(object):
         """
         Create entity
         """
-        return self.datas.create_entity(sid, tag, comment)
+        try:
+            sid = self.datas.create_entity(sid, tag, comment)
+            return sid
+        except Exception as ex:
+            raise ex
 
     def conform_entity(self, sid):
         """

@@ -4,7 +4,7 @@ import markdown
 import os
 from libs.manager.entities import Entities
 from spil.libs.sid.sid import Sid
-
+from libs.utils.pipe_exception import PipeException
 # Create flask
 app = Flask(__name__)
 api = Api(app)
@@ -48,16 +48,21 @@ api.add_resource(ProjectList, '/projects')
 ===============================
 """
 
+
 def get_paths(sid_base):
     paths = []
     for sid in entities.get_files(sid_base):
+        data = sid.data.copy()
+        data['id'] = str(sid)
+        data['path'] = sid.path
         if sid.has_a("state"):
             info = entities.get_files_info(sid)
-            paths.append({"id": str(sid), "path": sid.path, "date": info["date"], "ext": info["ext"],
-                          "size": info["size"], "tag": info["tag"], "comment": info["comment"]})
-        else:
-            paths.append({"id": str(sid), "path": sid.path})
-
+            data["date"] = info["date"]
+            data["ext"] = info["ext"]
+            data["size"] = info["size"]
+            data["tag"] = info["tag"]
+            data["comment"] = info["comment"]
+        paths.append(data)
     return {"data": paths, "message": "Success "}
 
 
@@ -75,6 +80,20 @@ class FilesExtList(Resource):
             return get_paths(Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, state, ext])))
         except Exception as ex:
             return {"data": [], "message": "Erreur : " + ex.message}
+
+    def post(self, project, type, param1, param2, task, subtask, version, state, ext):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('tag', required=False)
+            parser.add_argument('comment', required=False)
+            args = parser.parse_args()
+            sid = Sid(sid='/'.join([project, type, param1, param2, task, subtask, version, state, ext]))
+            entities.create_entity(sid, args['tag'], args['comment'])
+            return {'message': "Success", 'data': True}, 201
+        except PipeException as ex:
+            return {'message': str(ex.message), 'data': False}, 409
+        except Exception as ex:
+            return {'message': str(ex.message), 'data': False}, 409
 
 
 class FilesStateList(Resource):

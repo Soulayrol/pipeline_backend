@@ -40,7 +40,7 @@ Build with Docker<br/>
 
 Fill the rest request with what you want<br/>
 *Exemples :* <br/>
-`demo/s/s010/p010/comp/` => return the next comp folder (subtask)<br/>
+`http://localhost/file/aral/s/s010/p010/layout/main` => return the next main folder (version_state)<br/>
 `demo/s/*/*/*/*/*/*/*/*/` => return all the shot from demo project
 ###### Asset
 * `Get /project_name/assets` =>
@@ -54,6 +54,9 @@ Fill the rest request with what you want<br/>
     "subtask": "asset_subtask",
     "state": "asset_state",
     "version": "asset_version",
+
+    ** If state and version **
+    "size": "50 KB",
     "ext": "file_scene_extension",
     "date": "file creation date",
     "tag": "tag",
@@ -76,6 +79,9 @@ Fill the rest request with what you want<br/>
     "subtask": "shot_subtask",
     "state": "shot_state",
     "version": "shot_version",
+      
+    ** If state and version **
+    "size": "50 KB",
     "ext": "file_scene_extension",
     "date": "file creation date",
     "tag": "tag",
@@ -91,37 +97,26 @@ Fill the rest request with what you want<br/>
 ##### POST
 
 For create shoot or asset you need :<br/>
+`shot` => `file/project/s/seq/shot/task/subtask/state/version/ext`<br/>
+`asset` => `file/project/a/cat/name/task/subtask/state/version/ext`<br/>
+The file need to be complete. Send arguments in post.<br/>
 **Arguments :** <br/>
-###### Shot
-- `"project":string` Name of the project
-- `"type":string` Type (a for asset, s for shot)
-- `"seq":string` Name of the sequence
-- `"shot":string` Name of the shot
-- `"task":string` Name of the task
-- `"subtask":string` Name of the subtask
-- `"state":string` State (w=work, p=publish)
-- `"version":string` Version (ex: v001)
-- `"ext":string` File extension (without ".")
 - `"tag":string` Tag can be null
 - `"comment":string` Comment can be null
+###### Exemple :
+`http://localhost/file/aral/s/s010/p010/layout/main/v015/w/hipnc?comment=Create 26/03/2020`
 
-###### Asset
-- `"project":string` Name of the project
-- `"type":string` Type (a for asset, s for shot)
-- `"cat":string` Name of the category
-- `"name":string` Asset name
-- `"task":string` Name of the task
-- `"subtask":string` Name of the subtask
-- `"state":string` State (w=work, p=publish)
-- `"version":string` Version (ex: v001)
-- `"ext":string` File extension (without ".")
-- `"tag":string` Tag can be null
-- `"comment":string` Comment can be null
-
-**Responce :** <br/>
+**Responce :**<br/>
 ```json
 {
   "data": "true if created, false if not",
   "message": "Message"
+}
+``` 
+###### Exemple :
+```json
+{
+    "data": false,
+    "message": "File already exist"
 }
 ```

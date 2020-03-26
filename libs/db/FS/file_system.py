@@ -101,7 +101,7 @@ class FileSystem(object):
       File Creations
     ===================
     """
-    def create_shot(self, sid, tag='', comment=''):
+    def create_shot(self, sid, tag=None, comment=''):
         """
         Create a shot
         :param sid: Sid fill with datas
@@ -116,11 +116,13 @@ class FileSystem(object):
 
         # file path
         path = sid.get_as('state').path
-
+        if not os.path.exists(conf.root):
+            raise pe.PipeException(conf.root + " not find")
         if not os.path.exists(path):
             os.makedirs(path)
         else:
             raise pe.PipeException("File already exist")
+
         """
         Template
         """
@@ -149,7 +151,7 @@ class FileSystem(object):
             self.create_shot_3d_workspace(sid)
         return sid
 
-    def create_asset(self, sid, tag='', comment=''):
+    def create_asset(self, sid, tag=None, comment=''):
         """
         Create a shot
         :param sid: Sid fill with datas
@@ -167,6 +169,8 @@ class FileSystem(object):
         #question does it should be fixed here ? in the entity class or in the sid.path() function ?
 
         path = sid.get_as('state').path
+        if not os.path.exists(conf.root):
+            raise pe.PipeException(conf.root + " not find")
         if not os.path.exists(path):
             os.makedirs(path)
         else:
@@ -196,7 +200,7 @@ class FileSystem(object):
 
         return sid
 
-    def make_new_version(self, sid, tag, description):
+    def make_new_version(self, sid, tag=None, description=""):
         """
         This function create a new directory af the max version and return the path
         Create a json with description
@@ -213,15 +217,15 @@ class FileSystem(object):
         self.create_txt_file(new_sid, description)
         return sid
 
-    def create_package_file(self, sid, text, tag=''):
+    def create_package_file(self, sid, text, tag=None):
         """
         Create a txt file and the tag file
         """
         self.create_txt_file(sid, text)
-        if tag != '':
+        if tag:
             self.create_tag_file(sid, tag)
 
-    def create_publish(self, sid, tag='', comment=''):
+    def create_publish(self, sid, tag=None, comment=''):
         """
         Create a publish
         :param sid: Sid fill with datas
