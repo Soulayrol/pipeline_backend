@@ -23,7 +23,10 @@ class Datas(object):
         Glob one
         :return: The list
         """
-        return self.file_system.get(sid)
+        try:
+            return self.file_system.get(sid)
+        except Exception as ex:
+            raise ex
 
     def create_path(self, path):
         """Create a file system path"""
@@ -75,13 +78,16 @@ class Datas(object):
             return self.file_system.conform_shot(sid)
 
     def get_file_info(self, sid):
-        sid = sid.get_as("state")
-        coment = self.file_system.get_comment(sid)
-        ext = self.file_system.get_extension(sid)
-        tag = self.file_system.get_tag(sid)
-        size = self.file_system.get_size(sid)
-        date = self.file_system.get_date(sid)
-        return {"date": date, "size": size, "tag": tag, "ext": ext, "comment": coment}
+        try:
+            sid = sid.get_as("state")
+            coment = self.file_system.get_comment(sid)
+            ext = self.file_system.get_extension(sid)
+            tag = self.file_system.get_tag(sid)
+            size = self.file_system.get_size(sid)
+            date = self.file_system.get_date(sid)
+            return {"date": date, "size": size, "tag": tag, "ext": ext, "comment": coment}
+        except Exception as ex:
+            raise ex
 
     # endregion
 

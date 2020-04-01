@@ -50,20 +50,23 @@ api.add_resource(ProjectList, '/projects')
 
 
 def get_paths(sid_base):
-    paths = []
-    for sid in entities.get_files(sid_base):
-        data = sid.data.copy()
-        data['id'] = str(sid)
-        data['path'] = sid.path
-        if sid.has_a("state"):
-            info = entities.get_files_info(sid)
-            data["date"] = info["date"]
-            data["ext"] = info["ext"]
-            data["size"] = info["size"]
-            data["tag"] = info["tag"]
-            data["comment"] = info["comment"]
-        paths.append(data)
-    return {"data": paths, "message": "Success "}
+    try:
+        paths = []
+        for sid in entities.get_files(sid_base):
+            data = sid.data.copy()
+            data['id'] = str(sid)
+            data['path'] = sid.path
+            if sid.has_a("state"):
+                info = entities.get_files_info(sid)
+                data["date"] = info["date"]
+                data["ext"] = info["ext"]
+                data["size"] = info["size"]
+                data["tag"] = info["tag"]
+                data["comment"] = info["comment"]
+            paths.append(data)
+        return {"data": paths, "message": "Success "}
+    except Exception as ex:
+        return {"data": False, "message": "Error : " + ex.message}
 
 
 class FilesFramesList(Resource):

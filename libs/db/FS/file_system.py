@@ -278,6 +278,8 @@ class FileSystem(object):
         Return the list of folder in the sid with glob
         :return List of folder in the sid
         """
+        if not os.path.exists(conf.root):
+            raise pe.PipeException(conf.root + " not find")
         return FS.get(sid)
 
     def get_files(self, sid):
@@ -517,7 +519,8 @@ class FileSystem(object):
         engine_conform = conf.get_soft_by_ext(sid.get('ext'))
         # file creation
         path = sid.get_as('state').path
-
+        if not os.path.exists(conf.root):
+            raise pe.PipeException(conf.root + " not find")
         if not os.path.exists(path):
             os.makedirs(path)
         else:
@@ -556,7 +559,8 @@ class FileSystem(object):
 
         # file creation
         path = sid.get_as('state').path
-
+        if not os.path.exists(conf.root):
+            raise pe.PipeException(conf.root + " not find")
         if not os.path.exists(path):
             os.makedirs(path)
         else:

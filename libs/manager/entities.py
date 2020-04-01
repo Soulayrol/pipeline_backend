@@ -121,7 +121,10 @@ class Entities(object):
         :param sid: Sid of research
         :return: List of folder name
         """
-        return self.datas.get(sid)
+        try:
+            return self.datas.get(sid)
+        except Exception as ex:
+            raise ex
 
     def get_files_info(self, sid):
         """
@@ -129,7 +132,10 @@ class Entities(object):
         :param sid: sid to get info
         :return: date / tag / comment
         """
-        return self.datas.get_file_info(sid)
+        try:
+            return self.datas.get_file_info(sid)
+        except Exception as ex:
+            raise ex
 
 
 if __name__ == '__main__':
